@@ -26,16 +26,16 @@ def addBarcodesToIdentifier(read, UMI, cell):
 def addBarcodesToSeq(read, UMI, cell):
     '''extract the sequence from a read and append the UMI'''
 
-    read_seq = read.new_seq.split(" ")
+    read_seq = read.seq.split(" ")
 
     if cell == "":
         read_seq[0] = UMI + read_seq[0]
     else:
         read_seq[0] = UMI + read_seq[0]
 
-    new_seq = " ".join(read_seq)
+    seq = " ".join(read_seq)
 
-    return new_seq
+    return seq
 
 
 def extractSeqAndQuals(seq, quals, umi_bases, cell_bases, discard_bases,
@@ -603,7 +603,6 @@ class ExtractFilterAndUpdate:
 
             # UMI was on read 1
             if new_seq2 == "" and new_quals2 == "":
-                umi_seq = addBarcodesToSeq(read1, umi, cell)
                 read1.seq = new_seq
                 read1.quals = new_quals
 
@@ -618,13 +617,11 @@ class ExtractFilterAndUpdate:
                 read1, umi, cell)
             read1.identifier = new_identifier
             if self.pattern:  # seq and quals need to be updated
-                umi_seq = addBarcodesToSeq(read1, umi, cell)
                 read1.seq = new_seq
                 read1.quals = new_quals
 
             if read2:
-                new_identifier2 = addBarcodesToIdentifier(
-                    read2, umi, cell)
+                new_identifier2 = addBarcodesToIdentifier(read2, umi, cell)
                 read2.identifier = new_identifier2
                 if self.pattern2:   # seq and quals need to be updated
                     read2.seq = new_seq2
