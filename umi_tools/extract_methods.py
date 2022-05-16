@@ -12,16 +12,16 @@ def addBarcodesToIdentifier(read, UMI, cell):
     '''extract the identifier from a read and append the UMI and
     cell barcode before the first space'''
 
-    read_id = read.identifier.split(" ")
+    read_seq = read.seq.split(" ")
 
     if cell == "":
-        read_id[0] = read_id[0] + "_" + UMI
+        read_seq[0] = UMI + read_seq[0]
     else:
-        read_id[0] = read_id[0] + "_" + cell + "_" + UMI
+        read_seq[0] = UMI + cell + read_seq[0]
 
-    identifier = " ".join(read_id)
+    seq = " ".join(read_seq)
 
-    return identifier
+    return seq
 
 
 def extractSeqAndQuals(seq, quals, umi_bases, cell_bases, discard_bases,

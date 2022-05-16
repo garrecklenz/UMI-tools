@@ -53,3 +53,4 @@ doc/_build
 
 # PyBuilder
 target/
+.Rproj.user
