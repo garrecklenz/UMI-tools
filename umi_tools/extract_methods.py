@@ -12,20 +12,20 @@ def addBarcodesToIdentifier(read, UMI, cell):
     '''extract the identifier from a read and append the UMI and
     cell barcode before the first space'''
 
-    read_seq = read.seq.split(" ")
+    read_id = read.identifier.split(" ")
 
     if cell == "":
-        read_seq[0] = UMI + read_seq[0]
+        read_id[0] = UMI + read_id[0]
     else:
-        read_seq[0] = UMI + cell + read_seq[0]
+        read_id[0] = UMI + cell + read_id[0]
 
-    seq = " ".join(read_seq)
+    identifier = " ".join(read_id)
 
-    return seq
+    return identifier
 
 
 def extractSeqAndQuals(seq, quals, umi_bases, cell_bases, discard_bases,
-                       retain_umi=False):
+                       retain_umi=TRUE):
     '''Remove selected bases from seq and quals
     '''
 
@@ -589,12 +589,12 @@ class ExtractFilterAndUpdate:
 
             # UMI was on read 1
             if new_seq2 == "" and new_quals2 == "":
-                read1.seq = new_seq
+                read1.seq = UMI + new_seq
                 read1.quals = new_quals
 
             # UMI was on read 2
             if new_seq == "" and new_quals == "":
-                read2.seq = new_seq2
+                read2.seq = UMI + new_seq2
                 read2.quals = new_quals2
 
         # Otherwise, use input from user to identiy which reads need updating
