@@ -604,6 +604,8 @@ class ExtractFilterAndUpdate:
             # UMI was on read 1
             if new_seq2 == "" and new_quals2 == "":
                 read1.seq = new_seq
+                umi_seq = addBarcodesToSeq(read1,umi,cell)
+                read1.seq = umi_seq
                 read1.quals = new_quals
 
             # UMI was on read 2
@@ -618,6 +620,8 @@ class ExtractFilterAndUpdate:
             read1.identifier = new_identifier
             if self.pattern:  # seq and quals need to be updated
                 read1.seq = new_seq
+                umi_seq = addBarcodesToSeq(read1,umi,cell)
+                read1.seq = umi_seq
                 read1.quals = new_quals
 
             if read2:
@@ -626,6 +630,7 @@ class ExtractFilterAndUpdate:
                 if self.pattern2:   # seq and quals need to be updated
                     read2.seq = new_seq2
                     read2.quals = new_quals2
+        
 
         if read2 is None:
             return read1
